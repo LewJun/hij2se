@@ -3,3 +3,4 @@
 
 [TOC]
 
+mvn archetype:generate -DgroupId=com.lewjun -DartifactId=hij2se -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false -X -DarchetypeCatalog=local
