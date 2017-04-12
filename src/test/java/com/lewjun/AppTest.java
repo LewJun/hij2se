@@ -1,8 +1,13 @@
 package com.lewjun;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.lewjun.bean.Emp;
 
 /**
  * Unit test for simple App.
@@ -18,5 +23,18 @@ public class AppTest {
 		LOGGER.warn("warn");
 		LOGGER.debug("debug");
 		LOGGER.error("error");
+	}
+
+	ApplicationContext context = null;
+	@Before
+	public void initSpringContext() {
+		context = new ClassPathXmlApplicationContext("spring/spring.xml");
+	}
+
+	@Test
+	public void testGetBean() {
+		LOGGER.info("context={}", context);
+		Emp emp = context.getBean(Emp.class);
+		LOGGER.info("emp={}", emp);
 	}
 }
