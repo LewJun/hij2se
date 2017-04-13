@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.lewjun.bean.Emp;
+import com.lewjun.service.EmpService;
 
 /**
  * Unit test for simple App.
@@ -17,7 +18,7 @@ import com.lewjun.bean.Emp;
 public class AppTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppTest.class);
 
-	@Test
+    @Test
 	public void testGreet() {
 		LOGGER.info("info");
 		LOGGER.warn("warn");
@@ -27,14 +28,22 @@ public class AppTest {
 
 	ApplicationContext context = null;
 	@Before
-	public void initSpringContext() {
-		context = new ClassPathXmlApplicationContext("spring/spring.xml");
-	}
+    public void initSpringContext() {
+        context = new ClassPathXmlApplicationContext("spring/spring.xml");
+        LOGGER.info("context={}", context);
+    }
 
-	@Test
-	public void testGetBean() {
-		LOGGER.info("context={}", context);
-		Emp emp = context.getBean(Emp.class);
-		LOGGER.info("emp={}", emp);
-	}
+    @Test
+    public void testGetBean() {
+        Emp emp = context.getBean(Emp.class);
+        LOGGER.info("emp={}", emp);
+    }
+
+    @Test
+    public void testAutowired() {
+        EmpService empService = context.getBean(EmpService.class);
+        LOGGER.info("{}", empService);
+
+        empService.save(new Emp());
+    }
 }

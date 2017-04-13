@@ -66,4 +66,27 @@ System.out.println(date);
 ```
 
 
-## 
+## context:component-scan自动注入
+<!-- 自动扫描(自动注入)，扫描com.lewjun.service这个包以及它的子包的所有使用@Service注解标注的类 -->
+<context:component-scan base-package="com.lewjun.service" />
+
+<!-- 自动扫描(自动注入)，扫描com.lewjun这个包以及它的子包的所有使用@Service, @Repository注解标注的类 -->
+    <context:component-scan base-package="com.lewjun" />
+    
+<!-- 自动扫描(自动注入)，扫描com.lewjun.service, com.lewjun.dao这个包以及它的子包的所有使用@Service, @Repository注解标注的类 -->
+<context:component-scan base-package="com.lewjun.service, com.lewjun.dao" />
+
+EmpService empService = context.getBean(EmpService.class);
+LOGGER.info("{}",empService);
+@Service
+public class EmpServiceImpl implements EmpService {
+    @Autowired
+    EmpDao empDao;
+}
+
+@Test
+public void testAutowired() {
+    EmpService empService = context.getBean(EmpService.class);
+    LOGGER.info("{}", empService);
+   empService.save(new Emp());
+}
