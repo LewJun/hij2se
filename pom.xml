@@ -7,6 +7,9 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>hij2se</name>
 	<url>http://maven.apache.org</url>
+	<properties>
+		<spring.version>3.2.2.RELEASE</spring.version>
+	</properties>
 	<dependencies>
 		<!-- junit -->
 		<dependency>
@@ -48,5 +51,39 @@
 			<version>1.4.7</version>
 		</dependency>
 
+		<!-- spring frame start -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+		
+		<!-- spring frame end -->
+
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
 	</dependencies>
+
 </project>
