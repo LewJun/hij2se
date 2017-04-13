@@ -29,7 +29,7 @@ public class AppTest {
 	ApplicationContext context = null;
 	@Before
     public void initSpringContext() {
-        context = new ClassPathXmlApplicationContext("spring/spring.xml");
+        context = new ClassPathXmlApplicationContext("classpath:spring/spring.xml");
         LOGGER.info("context={}", context);
     }
 
