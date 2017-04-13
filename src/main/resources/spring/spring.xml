@@ -9,6 +9,18 @@
 	
 	<!-- 自动扫描(自动注入)，扫描com.lewjun这个包以及它的子包的所有使用@Service, @Repository注解标注的类 -->
     <context:component-scan base-package="com.lewjun" />
+	<!-- 引入配置文件 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<!-- <property name="location" value="classpath:developer.properties" /> -->
+		<property name="locations">
+			<list>
+				<value>classpath:developer.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<context:property-placeholder location="classpath:developer.properties"/>
     
     
 	<bean id="customEditorConfigurer"

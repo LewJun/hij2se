@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.lewjun.bean.Emp;
 import com.lewjun.dao.EmpDao;
 import com.lewjun.service.EmpService;
+import com.lewjun.utils.Developer;
 
 /**
  * 
@@ -20,6 +21,9 @@ import com.lewjun.service.EmpService;
 public class EmpServiceImpl implements EmpService {
     @Autowired
     EmpDao empDao;
+    
+    @Autowired
+    Developer developer;
 
     /** 
      * @see com.lewjun.service.EmpService#save(com.lewjun.bean.Emp)
@@ -28,6 +32,7 @@ public class EmpServiceImpl implements EmpService {
     public void save(Emp emp) {
         System.out.println("save");
         empDao.save(emp);
+        System.out.println(developer.getName());
     }
 
 }
