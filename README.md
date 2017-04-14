@@ -158,7 +158,7 @@ LOGGER.info("{}",empService);
 @Service
 public class EmpServiceImpl implements EmpService {
     @Autowired
-    EmpDao empDao;
+    EmpMapper empMapper;
 }
 
 @Test
@@ -434,7 +434,7 @@ INSERT INTO `salgrade` VALUES ('5', '3001', '9999');
 ## spring整合mybatis
 添加src/main/resources/spring/spring-mybatis.xml
 
-```
+``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:context="http://www.springframework.org/schema/context"
@@ -494,6 +494,141 @@ developer相关的信息（Developer.java的使用）全部去掉，这会儿重
 方案2：将所有的properties文件放在一个目录下，例如conf目录，在使用的时候：`<context:property-placeholder location="classpath:conf/*.properties"/>`
 
 我使用方案2来解决这个问题，只在spring.xml中一次使用`<context:property-placeholder location="classpath:conf/*.properties"/>`就加入了所有的properties文件内容
+
+## 保存一条数据（insert emp）
+
+### 添加EmpMapper
+
+``` java
+@Repository
+public interface EmpMapper {
+    public void insert(Emp emp);
+}
+```
+
+### 添加EmpService
+
+``` java
+public interface EmpService {
+    public void insert(Emp emp);
+}
+```
+
+### 添加EmpServiceImpl
+
+``` java
+@Service
+public class EmpServiceImpl implements EmpService {
+    @Autowired
+    EmpMapper empMapper;
+
+    /** 
+     * @see com.lewjun.service.EmpService#save(com.lewjun.bean.Emp)
+     */
+    @Override
+    public void insert(Emp emp) {
+        System.out.println("insert");
+        empMapper.insert(emp);
+    }
+
+}
+
+```
+
+### 添加EmpMapper.xml
+mybatis/mapper/com.lewjun.mapper/EmpMapper.xml
+
+```
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lewjun.mapper.EmpMapper">
+    <resultMap id="BaseResultMap" type="com.lewjun.bean.Emp">
+        <id column="EMPNO" property="empno" jdbcType="INTEGER" />
+        <result column="ENAME" property="ename" jdbcType="VARCHAR" />
+        <result column="JOB" property="job" jdbcType="VARCHAR" />
+        <result column="MGR" property="mgr" jdbcType="INTEGER" />
+        <result column="HIREDATE" property="hiredate" jdbcType="DATE" />
+        <result column="DEPTNO" property="deptno" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        EMPNO, ENAME, JOB, MGR, HIREDATE, DEPTNO
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+        parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from emp
+        where EMPNO = #{empno,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insert" parameterType="com.lewjun.bean.Emp">
+        insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, DEPTNO)
+        values (#{empno,jdbcType=INTEGER}, #{ename,jdbcType=VARCHAR},
+        #{job,jdbcType=VARCHAR}, #{mgr,jdbcType=INTEGER}, #{hiredate,jdbcType=DATE}, #{deptno,jdbcType=INTEGER})
+    </insert>
+</mapper>
+```
+
+
+### spring和MyBatis完美整合
+#### spring加载mapper.xml文件
+
+``` xml
+<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
+<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <!-- 自动扫描mapping.xml文件 -->
+    <property name="mapperLocations" value="classpath:mybatis/mapper/com.lewjun.mapper/*Mapper.xml"></property>
+</bean>
+```
+
+#### spring加载mapper.java文件
+
+``` xml
+<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="com.lewjun.mapper" />
+    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+</bean>
+```
+
+### run com.lewjun.SpringJunitTest.testEmpServiceInsert()
+
+#### ClassNotFoundException DaoSupport
+Caused by: java.lang.ClassNotFoundException: org.springframework.dao.support.DaoSupport
+
+解决方案：添加spring-jdbc依赖
+
+``` xml
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-jdbc</artifactId>
+    <version>${spring.version}</version>
+</dependency>
+```
+
+再次运行
+```
+org.mybatis.spring.SqlSessionUtils.getSqlSession(SqlSessionUtils.java:99)  Creating a new SqlSession
+org.mybatis.spring.SqlSessionUtils.registerSessionHolder(SqlSessionUtils.java:150)  SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4bf53e] was not registered for synchronization because synchronization is not active
+org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection(DataSourceUtils.java:110)  Fetching JDBC Connection from DataSource
+org.mybatis.spring.transaction.SpringManagedTransaction.openConnection(SpringManagedTransaction.java:89)  JDBC Connection [jdbc:mysql://192.168.1.189:3306/scott, UserName=root@192.168.1.41, MySQL Connector Java] will not be managed by Spring
+org.apache.ibatis.logging.jdbc.BaseJdbcLogger.debug(BaseJdbcLogger.java:145)  ==>  Preparing: insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, DEPTNO) values (?, ?, ?, ?, ?, ?) 
+org.apache.ibatis.logging.jdbc.BaseJdbcLogger.debug(BaseJdbcLogger.java:145)  ==> Parameters: null, null, null, null, null, null
+org.apache.ibatis.logging.jdbc.BaseJdbcLogger.debug(BaseJdbcLogger.java:145)  <==    Updates: 1
+org.mybatis.spring.SqlSessionUtils.closeSqlSession(SqlSessionUtils.java:193)  Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4bf53e]
+org.springframework.jdbc.datasource.DataSourceUtils.doReleaseConnection(DataSourceUtils.java:327)  Returning JDBC Connection to DataSource
+```
+
+通过上面的日志可以看到，emp已经成功保存到数据库里了。
+
+
+
+
+
+
 
 
 

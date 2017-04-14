@@ -44,6 +44,6 @@ public class AppTest {
         EmpService empService = context.getBean(EmpService.class);
         LOGGER.info("{}", empService);
 
-        empService.save(new Emp());
+        empService.insert(new Emp());
     }
 }

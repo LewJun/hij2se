@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lewjun.bean.Emp;
-import com.lewjun.dao.EmpDao;
+import com.lewjun.mapper.EmpMapper;
 import com.lewjun.service.EmpService;
 import com.lewjun.utils.Developer;
 
@@ -20,7 +20,7 @@ import com.lewjun.utils.Developer;
 @Service
 public class EmpServiceImpl implements EmpService {
     @Autowired
-    EmpDao empDao;
+    EmpMapper empMapper;
     
     @Autowired
     Developer developer;
@@ -29,9 +29,9 @@ public class EmpServiceImpl implements EmpService {
      * @see com.lewjun.service.EmpService#save(com.lewjun.bean.Emp)
      */
     @Override
-    public void save(Emp emp) {
-        System.out.println("save");
-        empDao.save(emp);
+    public void insert(Emp emp) {
+        System.out.println("insert");
+        empMapper.insert(emp);
         System.out.println(developer.getName());
     }
 

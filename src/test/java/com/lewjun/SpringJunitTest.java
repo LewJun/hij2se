@@ -26,7 +26,7 @@ public class SpringJunitTest {
     private EmpService empService;
 
     @Test
-    public void testEmpServiceSave() {
-        empService.save(new Emp());
+    public void testEmpServiceInsert() {
+        empService.insert(new Emp());
     }
 }
