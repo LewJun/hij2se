@@ -679,3 +679,113 @@ public class EmpServiceImpl implements EmpService {//...
 
 ### run
 再运行，异常同样出现了，但是数据并没有被添加到数据库中。
+
+
+## AOP
+
+* 添加依赖spring-aop
+```
+<!-- AOP 用于在spring中配置aop -->
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-aop</artifactId>
+	<version>${spring.version}</version>
+</dependency>
+```
+
+* 添加依赖aspectj
+
+```
+<!-- 面向切面的框架 start -->
+<dependency>
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjrt</artifactId>
+    <version>${aspectj.version}</version>
+</dependency>
+
+<dependency>
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjweaver</artifactId>
+    <version>${aspectj.version}</version>
+</dependency>
+<!-- 面向切面的框架 end -->
+```
+
+* 开启aop，使@AspectJ可用
+
+修改spring.xml
+
+```
+xmlns:aop="http://www.springframework.org/schema/aop"
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+
+<!-- 开启aop，使@AspectJ可用 -->
+<aop:aspectj-autoproxy />
+```
+
+* 编写切面类EmpAspect
+
+``` java
+@Component
+@Aspect
+@Order(1)
+public class EmpAspect {
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmpAspect.class);
+
+	@Around(value = "execution(* com.lewjun.service.EmpService.insert(..))")
+	// @Around(value = "execution(* com.lewjun.service.impl.EmpServiceImpl.insert(..))")
+	public Object insert(ProceedingJoinPoint jp) throws Throwable {
+		LOGGER.info("【EmpAspect insert】");
+		Object[] args = jp.getArgs();
+		for (Object arg : args) {
+			if (arg instanceof Emp) {
+				Emp emp = (Emp) arg;
+				// 修改时间
+				emp.setHiredate(new Date());
+				LOGGER.info("【emp={}】", emp);
+			}
+		}
+		// 使程序继续往下执行，并接收返回数据
+		Object object = jp.proceed();
+		LOGGER.info("【object={}】", object);
+		return object;
+	}
+}
+```
+
+* 拦截所有的Service方法
+
+``` java
+@Component
+@Aspect
+@Order(Integer.MIN_VALUE) // order 越小越先被执行
+public class ApplicationBaseAspect {
+	public static final Logger LOGGER = LoggerFactory.getLogger(ApplicationBaseAspect.class);
+
+	// 拦截到所有的操作
+	@Around("execution(* com.lewjun.service.*Service.*(..))")
+	public Object aspect(ProceedingJoinPoint jp) throws Throwable {
+		Signature signature = jp.getSignature();
+		MethodSignature methodSignature = (MethodSignature) signature;
+		Method method = methodSignature.getMethod();
+		StringBuilder sb = new StringBuilder("");
+		sb.append(method.getReturnType().getName()).append(" ").append(method.getDeclaringClass().getName()).append(".")
+				.append(method.getName());
+		Object[] args = jp.getArgs();
+		if (args != null && args.length > 0) {
+			sb.append("(");
+			for (Object arg : args) {
+				sb.append(arg.getClass().getName()).append(", ");
+			}
+			sb.append(")");
+			sb.deleteCharAt(sb.lastIndexOf(", "));
+		}
+		LOGGER.info("【 方法 {} 正被拦截】", sb.toString());
+		// 方法 void com.lewjun.service.EmpService.insert(com.lewjun.bean.Emp ) 正被拦截
+		Object object = jp.proceed();
+		LOGGER.info("【返回值={}】", object);
+		return object;
+	}
+}
+```

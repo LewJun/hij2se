@@ -35,7 +35,7 @@ public class EmpServiceImpl implements EmpService {
         System.out.println("insert");
         empMapper.insert(emp);
         // 模拟产生一个异常
-        int i = 1/0;
+//        int i = 1/0;
     }
 
 }
