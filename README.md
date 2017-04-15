@@ -624,11 +624,58 @@ org.springframework.jdbc.datasource.DataSourceUtils.doReleaseConnection(DataSour
 
 通过上面的日志可以看到，emp已经成功保存到数据库里了。
 
+## 事务处理
 
+### 模拟异常
+假设在完成insert后，出现一个 / by zero的异常
+``` java
+public void insert(Emp emp) {
+    empMapper.insert(emp);
+    ** int i = 1/0; **
+}
+```
+现在来看看数据库，数据还是被添加进去了，但是希望被回滚rollback。
 
+### Engine InnoDB
+首先，要保证数据库支持回滚，mysql需要设置数据库表的引擎（engine）是InnoDB
+在navicat下，右键数据库表--选项--Engine--InnoDB即可设置。
 
+### 配置tx
 
+* 添加`spring-tx`依赖
 
+``` xml
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-tx</artifactId>
+	<version>${spring.version}</version>
+</dependency>
+```
 
+* 使用 tx
+修改spring-mybatis.xml
 
+``` xml
+xmlns:tx="http://www.springframework.org/schema/tx"
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 使用annotation定义数据库事务，这样可以在类或方法中直接使用@Transactional注解来声明事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+```
 
+* 使用@Transactional注解
+给EmpServiceImpl添加`@Transactional`注解
+
+``` java
+@Service
+@Transactional
+public class EmpServiceImpl implements EmpService {//...
+```
+
+### run
+再运行，异常同样出现了，但是数据并没有被添加到数据库中。

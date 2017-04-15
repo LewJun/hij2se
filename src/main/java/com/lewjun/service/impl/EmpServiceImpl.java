@@ -6,6 +6,7 @@ package com.lewjun.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.lewjun.bean.Emp;
 import com.lewjun.mapper.EmpMapper;
@@ -18,6 +19,7 @@ import com.lewjun.utils.Developer;
  * @version $Id: EmpServiceImpl.java, v 0.1 2017年4月13日 上午10:51:11 LewJun Exp $
  */
 @Service
+@Transactional
 public class EmpServiceImpl implements EmpService {
     @Autowired
     EmpMapper empMapper;
@@ -32,7 +34,8 @@ public class EmpServiceImpl implements EmpService {
     public void insert(Emp emp) {
         System.out.println("insert");
         empMapper.insert(emp);
-        System.out.println(developer.getName());
+        // 模拟产生一个异常
+        int i = 1/0;
     }
 
 }
