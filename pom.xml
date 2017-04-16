@@ -53,6 +53,7 @@
 		</dependency>
 
 		<!-- spring frame start -->
+		<!-- 1 spring core start-->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -71,12 +72,9 @@
 			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<!-- 1 spring core end-->
 		
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
+		<!-- 2 spring DAO层 start -->
 		<dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
@@ -89,6 +87,15 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<!-- 2 spring DAO层 end -->
+		
+		<!-- 3 spring 测试 start -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+		<!-- 3 spring 测试 end -->
 		<!-- AOP 用于在spring中配置aop -->
 		<dependency>
 			<groupId>org.springframework</groupId>
