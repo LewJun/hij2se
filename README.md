@@ -625,9 +625,185 @@ org.springframework.jdbc.datasource.DataSourceUtils.doReleaseConnection(DataSour
 通过上面的日志可以看到，emp已经成功保存到数据库里了。
 
 
+## mybatis关联一对多查询
+
+我现在要查询10部门下的所有成员，sql查询的结果如下表所示：
+
+|DEPTNO|DNAME|LOC|EMPNO|ENAME|JOB|MGR|HIREDATE|DEPTNO|
+|:--|:--|:--|:--|:--|:--|:--|:--|:--|
+|10|  ACCOUNTING|  NEW YORK|    7782|    CLARK|   MANAGER| 7839|    1981-06-09|  10|
+|10|  ACCOUNTING|  NEW YORK|    7839|    KING|    PRESIDENT|   |    1981-11-17|  10|
+|10|  ACCOUNTING|  NEW YORK|    7934|    MILLER|  CLERK|   7782|    1982-01-23|  10|
 
 
+### 期望映射到dept效果
 
+我得到的数据是这样的
+
+``` json 
+[
+  {
+    "deptno": 10,
+    "dname": "ACCOUNTING",
+    "loc": "NEW YORK"
+    "empList": [
+      {
+        "deptno": 10,
+        "empno": 7782,
+        "ename": "CLARK",
+        "hiredate": 360864000000,
+        "job": "MANAGER",
+        "mgr": 7839
+      },
+      {
+        "deptno": 10,
+        "empno": 7839,
+        "ename": "KING",
+        "hiredate": 374774400000,
+        "job": "PRESIDENT"
+      },
+      {
+        "deptno": 10,
+        "empno": 7934,
+        "ename": "MILLER",
+        "hiredate": 380563200000,
+        "job": "CLERK",
+        "mgr": 7782
+      }
+    ]
+  }
+]
+```
+
+### 修改Dept
+
+在Dept中关联Emp
+
+``` java
+public class Dept {
+    /**部门编号*/
+    private Integer   deptno;
+
+    private String    dname;
+
+    private String    loc;
+
+    /** 部门下的成员 */
+    private List<Emp> empList;
+```
+
+### 添加查询
+
+```
+public Dept selectByPrimaryKey(Serializable pk);
+```
+
+### 修改DeptMapper.xml
+
+```
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lewjun.mapper.DeptMapper">
+    <resultMap id="EmpResultMap" type="com.lewjun.bean.Emp">
+        <id column="EMPNO" property="empno" jdbcType="INTEGER" />
+        <result column="ENAME" property="ename" jdbcType="VARCHAR" />
+        <result column="JOB" property="job" jdbcType="VARCHAR" />
+        <result column="MGR" property="mgr" jdbcType="INTEGER" />
+        <result column="HIREDATE" property="hiredate" jdbcType="DATE" />
+        <result column="DEPTNO" property="deptno" jdbcType="INTEGER" />
+    </resultMap>
+    <resultMap id="BaseResultMap" type="com.lewjun.bean.Dept">
+        <id column="DEPTNO" property="deptno" jdbcType="INTEGER" />
+        <result column="DNAME" property="dname" jdbcType="VARCHAR" />
+        <result column="LOC" property="loc" jdbcType="VARCHAR" />
+        <collection property="empList" resultMap="EmpResultMap" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        DEPTNO, DNAME, LOC
+    </sql>
+
+    <!-- 当条件成立时，会自动在语句上加上where关键字 -->
+    <select id="selectDeptWithEmpsByPrimaryKey" parameterType="object"
+        resultMap="BaseResultMap">
+        select d.deptno,d.dname,d.loc, e.empno,e.ename,e.job,e.mgr,e.hiredate,e.deptno
+        from dept d left join emp e on d.deptno=e.deptno  
+        where   d.deptno=#{pk} 
+    </select>
+</mapper>
+```
+
+### 运行
+编写测试类，测试通过
+```
+@Test
+public void test_selectDeptWithEmpsByPrimaryKey() {
+    List<Dept> deptList = deptService.selectDeptWithEmpsByPrimaryKey(10);
+    LOGGER.info("【deptList={}】", deptList);
+    LOGGER.info("【deptList JSON ={}】", JSON.toJSONString(deptList));
+}
+```
+
+得到我们预期的效果
+
+当我们传入40的时候
+
+测试结果却是这样：
+``` json
+[{"deptno":40,"dname":"OPERATIONS","empList":[{"deptno":40}],"loc":"BOSTON"}]
+```
+empList有问题，而实际上，在scott下dept没有对应的员工，然而这里却有数据，问题是这样的，emp和dept中都有deptno，为解决这个问题，我们只有给emp表的deptno使用别名解决了。
+修改EmpResultMap下的
+``` xml
+<result column="DEPTNO" property="deptno" jdbcType="INTEGER" />
+```
+
+为
+
+``` xml 
+<result column="DEPTNO" property="deptno" jdbcType="INTEGER" />
+```
+
+查询sql 改为 e.deptno as edeptno
+``` xml
+    <!-- 当条件成立时，会自动在语句上加上where关键字 -->
+    <select id="selectDeptWithEmpsByPrimaryKey" parameterType="object"
+        resultMap="BaseResultMap">
+        select d.deptno,d.dname,d.loc, e.empno,e.ename,e.job,e.mgr,e.hiredate,e.deptno as edeptno
+        from dept d left join emp e on d.deptno=e.deptno  
+        where   d.deptno=#{pk} 
+    </select>
+```
+
+## mybatis There is no getter for property named 'pk' in 'class java.lang.Integer
+
+我希望当传入参数为空时，查询全部
+
+``` sql
+<where>
+   <if test=" pk != null and pk != '' ">
+       d.deptno=#{pk} 
+   </if>
+</where>
+```
+
+#### 分析原因
+当时执行的时候，会返回`There is no getter for property named 'pk' in 'class java.lang.Integer`错误
+原因：用mybatis查询时，**传入一个参数，且进行判断时，会报这个错**
+
+#### 解决方案
+
+将如上sql该成为如下：
+
+``` sql
+<where>
+   <if test=" _parameter != null and _parameter != '' ">
+       d.deptno=#{_parameter} 
+   </if>
+</where>
+```
+
+这样，问题就解决了。
 
 
 

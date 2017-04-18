@@ -3,17 +3,18 @@ package com.lewjun.bean;
 import java.util.Date;
 
 public class Emp {
-    private Integer empno;
+    private Integer   empno;
 
-    private String ename;
+    private String    ename;
 
-    private String job;
+    private String    job;
 
-    private Integer mgr;
+    private Integer   mgr;
 
-    private Date hiredate;
+    private Date      hiredate;
 
-    private Integer deptno;
+    private Integer   deptno;
+
 
     public Integer getEmpno() {
         return empno;
@@ -63,12 +64,10 @@ public class Emp {
         this.deptno = deptno;
     }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Emp [empno=" + empno + ", ename=" + ename + ", job=" + job + ", mgr=" + mgr + ", hiredate=" + hiredate
-				+ ", deptno=" + deptno + "]";
-	}
+    @Override
+    public String toString() {
+        return "Emp [empno=" + empno + ", ename=" + ename + ", job=" + job + ", mgr=" + mgr
+               + ", hiredate=" + hiredate + ", deptno=" + deptno + "]";
+    }
+
 }

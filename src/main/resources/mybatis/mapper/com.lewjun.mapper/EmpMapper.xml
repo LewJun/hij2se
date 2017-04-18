@@ -13,18 +13,116 @@
 	<sql id="Base_Column_List">
 		EMPNO, ENAME, JOB, MGR, HIREDATE, DEPTNO
 	</sql>
+	
+	<sql id="queryAll">
+	   select
+       <include refid="Base_Column_List" />
+       from emp
+	</sql>
 
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
-		parameterType="java.lang.Integer">
-		select
-		<include refid="Base_Column_List" />
-		from emp
-		where EMPNO = #{empno,jdbcType=INTEGER}
-	</select>
-
-	<insert id="insert" parameterType="com.lewjun.bean.Emp">
-		insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, DEPTNO)
-		values (#{empno,jdbcType=INTEGER}, #{ename,jdbcType=VARCHAR},
-		#{job,jdbcType=VARCHAR}, #{mgr,jdbcType=INTEGER}, #{hiredate,jdbcType=DATE}, #{deptno,jdbcType=INTEGER})
+    <!-- 插入一个对象到数据库 
+    empno字段自增长 
+    -->
+	<insert id="insert" parameterType="com.lewjun.bean.Emp" useGeneratedKeys="true" keyProperty="empno">
+		insert into emp (ENAME, JOB, MGR, HIREDATE, DEPTNO)
+		values (#{ename}, #{job}, #{mgr}, #{hiredate}, #{deptno})
 	</insert>
+	
+	<!-- 批量插入数据 -->
+	<insert id="inserts" parameterType="list">
+	   insert into emp (ENAME, JOB, MGR, HIREDATE, DEPTNO)
+	   values 
+	   <foreach collection="list" item="item" separator=",">
+	       (#{item.ename}, #{item.job}, #{item.mgr}, #{item.hiredate}, #{item.deptno})
+	   </foreach>
+	</insert>
+	<insert id="insertSelective" parameterType="com.lewjun.bean.Emp" >
+    insert into emp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="empno != null" >
+        EMPNO,
+      </if>
+      <if test="ename != null" >
+        ENAME,
+      </if>
+      <if test="job != null" >
+        JOB,
+      </if>
+      <if test="mgr != null" >
+        MGR,
+      </if>
+      <if test="hiredate != null" >
+        HIREDATE,
+      </if>
+      <if test="deptno != null" >
+        DEPTNO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="empno != null" >
+        #{empno},
+      </if>
+      <if test="ename != null" >
+        #{ename},
+      </if>
+      <if test="job != null" >
+        #{job},
+      </if>
+      <if test="mgr != null" >
+        #{mgr},
+      </if>
+      <if test="hiredate != null" >
+        #{hiredate},
+      </if>
+      <if test="deptno != null" >
+        #{deptno},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lewjun.bean.Emp" >
+    update emp
+    <set >
+      <if test="ename != null" >
+        ENAME = #{ename},
+      </if>
+      <if test="job != null" >
+        JOB = #{job},
+      </if>
+      <if test="mgr != null" >
+        MGR = #{mgr},
+      </if>
+      <if test="hiredate != null" >
+        HIREDATE = #{hiredate},
+      </if>
+      <if test="deptno != null" >
+        DEPTNO = #{deptno},
+      </if>
+    </set>
+    where EMPNO = #{empno}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lewjun.bean.Emp" >
+    update emp
+    set ENAME = #{ename},
+      JOB = #{job},
+      MGR = #{mgr},
+      HIREDATE = #{hiredate},
+      DEPTNO = #{deptno}
+    where EMPNO = #{empno}
+  </update>
+	<!-- 根据pk删除 -->
+	<delete id="deleteByPrimaryKey" parameterType="object">
+	   delete from emp where empno = #{pk}
+	</delete>
+	
+    <!-- 根据主键查询 -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+        parameterType="java.lang.Integer">
+        <include refid="queryAll"/>
+        where EMPNO = #{empno}
+    </select>
+    
+    <!-- 查询所有记录 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+       <include refid="queryAll"/>
+    </select>
 </mapper>

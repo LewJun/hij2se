@@ -4,14 +4,11 @@
  */
 package com.lewjun;
 
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.lewjun.bean.Emp;
-import com.lewjun.service.EmpService;
 
 /**
  * 
@@ -21,12 +18,6 @@ import com.lewjun.service.EmpService;
 @RunWith(SpringJUnit4ClassRunner.class)
 //配置了@ContextConfiguration注解并使用该注解的locations属性指明spring和配置文件之后，
 @ContextConfiguration(locations = { "classpath:spring/spring.xml" })
-public class SpringJunitTest {
-    @Autowired
-    private EmpService empService;
-
-    @Test
-    public void testEmpServiceInsert() {
-        empService.insert(new Emp());
-    }
+public abstract class SpringJunitTest {
+    protected static final Logger LOGGER = LoggerFactory.getLogger(SpringJunitTest.class);
 }

@@ -1,43 +1,53 @@
 package com.lewjun.bean;
 
+import java.util.List;
+
 public class Dept {
-	private Integer	deptno;
+    /**部门编号*/
+    private Integer   deptno;
 
-	private String	dname;
+    private String    dname;
 
-	private String	loc;
+    private String    loc;
 
-	public Integer getDeptno() {
-		return deptno;
-	}
+    /** 部门下的成员 */
+    private List<Emp> empList;
 
-	public void setDeptno(Integer deptno) {
-		this.deptno = deptno;
-	}
+    public Integer getDeptno() {
+        return deptno;
+    }
 
-	public String getDname() {
-		return dname;
-	}
+    public void setDeptno(Integer deptno) {
+        this.deptno = deptno;
+    }
 
-	public void setDname(String dname) {
-		this.dname = dname;
-	}
+    public String getDname() {
+        return dname;
+    }
 
-	public String getLoc() {
-		return loc;
-	}
+    public void setDname(String dname) {
+        this.dname = dname;
+    }
 
-	public void setLoc(String loc) {
-		this.loc = loc;
-	}
+    public String getLoc() {
+        return loc;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Dept [deptno=" + deptno + ", dname=" + dname + ", loc=" + loc + "]";
-	}
+    public void setLoc(String loc) {
+        this.loc = loc;
+    }
+
+    public List<Emp> getEmpList() {
+        return empList;
+    }
+
+    public void setEmpList(List<Emp> empList) {
+        this.empList = empList;
+    }
+
+    @Override
+    public String toString() {
+        return "Dept [deptno=" + deptno + ", dname=" + dname + ", loc=" + loc + ", empList="
+               + empList + "]";
+    }
 }
