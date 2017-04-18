@@ -1,6 +1,7 @@
 package com.lewjun.bean;
 
 import java.util.Date;
+import java.util.List;
 
 public class Emp {
     private Integer   empno;
@@ -15,6 +16,7 @@ public class Emp {
 
     private Integer   deptno;
 
+    private List<Emp> empList;
 
     public Integer getEmpno() {
         return empno;
@@ -64,10 +66,18 @@ public class Emp {
         this.deptno = deptno;
     }
 
+    public List<Emp> getEmpList() {
+        return empList;
+    }
+
+    public void setEmpList(List<Emp> empList) {
+        this.empList = empList;
+    }
+
     @Override
     public String toString() {
         return "Emp [empno=" + empno + ", ename=" + ename + ", job=" + job + ", mgr=" + mgr
-               + ", hiredate=" + hiredate + ", deptno=" + deptno + "]";
+               + ", hiredate=" + hiredate + ", deptno=" + deptno + ", empList=" + empList + "]";
     }
 
 }

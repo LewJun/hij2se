@@ -8,6 +8,13 @@
 		<result column="MGR" property="mgr" jdbcType="INTEGER" />
 		<result column="HIREDATE" property="hiredate" jdbcType="DATE" />
 		<result column="DEPTNO" property="deptno" jdbcType="INTEGER" />
+		<collection property="empList" ofType="com.lewjun.bean.Emp">
+		    <result column="ENAME1" property="ename" jdbcType="VARCHAR" />
+			<result column="JOB1" property="job" jdbcType="VARCHAR" />
+			<result column="MGR1" property="mgr" jdbcType="INTEGER" />
+			<result column="HIREDATE1" property="hiredate" jdbcType="DATE" />
+			<result column="DEPTNO1" property="deptno" jdbcType="INTEGER" />
+		</collection>
 	</resultMap>
 
 	<sql id="Base_Column_List">
@@ -125,4 +132,21 @@
     <select id="selectAll" resultMap="BaseResultMap">
        <include refid="queryAll"/>
     </select>
+
+    <!-- 查询员工及其下属员工 -->
+	<select id="selectEmpWithSubEmpByPrimaryKey" parameterType="object"
+		resultMap="BaseResultMap">
+		select e1.*, e3.ENAME as ENAME1,e3.JOB as JOB1,e3.MGR as
+		MGR1,e3.HIREDATE as HIREDATE1,e3.DEPTNO as DEPTNO1
+		from emp e1 LEFT JOIN emp e3 ON e1.EMPNO=e3.MGR
+		where EXISTS (
+		select * from emp e2 where e1.EMPNO = e2.mgr
+		)
+		<where>
+			<if test=" _parameters != null and _parameter != '' ">
+				AND e1.EMPNO=#{_parameter}
+			</if>
+		</where>
+		ORDER BY e1.EMPNO
+	</select>
 </mapper>

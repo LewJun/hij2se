@@ -81,4 +81,12 @@ public interface EmpMapper {
      * @return Emp
      */
     Emp selectByPrimaryKey(Serializable pk);
+    
+    /**
+     * 查询员工及其下属员工
+     * 
+     * @param pk
+     * @return
+     */
+    List<Emp> selectEmpWithSubEmpByPrimaryKey(Serializable pk);
 }

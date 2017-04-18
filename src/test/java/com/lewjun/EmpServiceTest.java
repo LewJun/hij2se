@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.alibaba.fastjson.JSON;
 import com.lewjun.bean.Emp;
 import com.lewjun.service.EmpService;
 
@@ -99,6 +100,14 @@ public class EmpServiceTest extends SpringJunitTest {
         Integer id = 7940;
         int effectRows = empService.deleteByPrimaryKey(id);
         LOGGER.info("【effectRows={}】", effectRows);
+    }
+    
+    @Test
+    public void test_selectEmpWithSubEmpByPrimaryKey() {
+        Integer id = 7698;
+        List<Emp> empList = empService.selectEmpWithSubEmpByPrimaryKey(id);
+        LOGGER.info("【empList={}】", empList);
+        LOGGER.info("【empList json={}】", JSON.toJSONString(empList));
     }
 
 }

@@ -88,4 +88,12 @@ public class EmpServiceImpl implements EmpService {
         return empMapper.updateByPrimaryKeySelective(record);
     }
 
+    /** 
+     * @see com.lewjun.service.EmpService#selectEmpWithSubEmpByPrimaryKey(java.io.Serializable)
+     */
+    @Override
+    public List<Emp> selectEmpWithSubEmpByPrimaryKey(Serializable pk) {
+        return empMapper.selectEmpWithSubEmpByPrimaryKey(pk);
+    }
+
 }
