@@ -1,514 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lewjun.mapper.EmpMapper">
-  <resultMap id="BaseResultMap" type="com.lewjun.bean.Emp">
-    <id column="empno" jdbcType="INTEGER" property="empno" />
-    <result column="deptno" jdbcType="INTEGER" property="deptno" />
-    <result column="ename" jdbcType="VARCHAR" property="ename" />
-    <result column="hiredate" jdbcType="TIMESTAMP" property="hiredate" />
-    <result column="job" jdbcType="VARCHAR" property="job" />
-    <result column="mgr" jdbcType="INTEGER" property="mgr" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    empno, deptno, ename, hiredate, job, mgr
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from emp
-    where empno = #{empno,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from emp
-    where empno = #{empno,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.lewjun.bean.Emp">
-    insert into emp (empno, deptno, ename, 
-      hiredate, job, mgr
-      )
-    values (#{empno,jdbcType=INTEGER}, #{deptno,jdbcType=INTEGER}, #{ename,jdbcType=VARCHAR}, 
-      #{hiredate,jdbcType=TIMESTAMP}, #{job,jdbcType=VARCHAR}, #{mgr,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.lewjun.bean.Emp">
-    insert into emp
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="empno != null">
-        empno,
-      </if>
-      <if test="deptno != null">
-        deptno,
-      </if>
-      <if test="ename != null">
-        ename,
-      </if>
-      <if test="hiredate != null">
-        hiredate,
-      </if>
-      <if test="job != null">
-        job,
-      </if>
-      <if test="mgr != null">
-        mgr,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="empno != null">
-        #{empno,jdbcType=INTEGER},
-      </if>
-      <if test="deptno != null">
-        #{deptno,jdbcType=INTEGER},
-      </if>
-      <if test="ename != null">
-        #{ename,jdbcType=VARCHAR},
-      </if>
-      <if test="hiredate != null">
-        #{hiredate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="job != null">
-        #{job,jdbcType=VARCHAR},
-      </if>
-      <if test="mgr != null">
-        #{mgr,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.lewjun.bean.Emp">
-    update emp
-    <set>
-      <if test="deptno != null">
-        deptno = #{deptno,jdbcType=INTEGER},
-      </if>
-      <if test="ename != null">
-        ename = #{ename,jdbcType=VARCHAR},
-      </if>
-      <if test="hiredate != null">
-        hiredate = #{hiredate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="job != null">
-        job = #{job,jdbcType=VARCHAR},
-      </if>
-      <if test="mgr != null">
-        mgr = #{mgr,jdbcType=INTEGER},
-      </if>
-    </set>
-    where empno = #{empno,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.lewjun.bean.Emp">
-    update emp
-    set deptno = #{deptno,jdbcType=INTEGER},
-      ename = #{ename,jdbcType=VARCHAR},
-      hiredate = #{hiredate,jdbcType=TIMESTAMP},
-      job = #{job,jdbcType=VARCHAR},
-      mgr = #{mgr,jdbcType=INTEGER}
-    where empno = #{empno,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.lewjun.bean.Emp">
-    <id column="empno" jdbcType="INTEGER" property="empno" />
-    <result column="deptno" jdbcType="INTEGER" property="deptno" />
-    <result column="ename" jdbcType="VARCHAR" property="ename" />
-    <result column="hiredate" jdbcType="TIMESTAMP" property="hiredate" />
-    <result column="job" jdbcType="VARCHAR" property="job" />
-    <result column="mgr" jdbcType="INTEGER" property="mgr" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    empno, deptno, ename, hiredate, job, mgr
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from emp
-    where empno = #{empno,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from emp
-    where empno = #{empno,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.lewjun.bean.Emp">
-    insert into emp (empno, deptno, ename, 
-      hiredate, job, mgr
-      )
-    values (#{empno,jdbcType=INTEGER}, #{deptno,jdbcType=INTEGER}, #{ename,jdbcType=VARCHAR}, 
-      #{hiredate,jdbcType=TIMESTAMP}, #{job,jdbcType=VARCHAR}, #{mgr,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.lewjun.bean.Emp">
-    insert into emp
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="empno != null">
-        empno,
-      </if>
-      <if test="deptno != null">
-        deptno,
-      </if>
-      <if test="ename != null">
-        ename,
-      </if>
-      <if test="hiredate != null">
-        hiredate,
-      </if>
-      <if test="job != null">
-        job,
-      </if>
-      <if test="mgr != null">
-        mgr,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="empno != null">
-        #{empno,jdbcType=INTEGER},
-      </if>
-      <if test="deptno != null">
-        #{deptno,jdbcType=INTEGER},
-      </if>
-      <if test="ename != null">
-        #{ename,jdbcType=VARCHAR},
-      </if>
-      <if test="hiredate != null">
-        #{hiredate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="job != null">
-        #{job,jdbcType=VARCHAR},
-      </if>
-      <if test="mgr != null">
-        #{mgr,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.lewjun.bean.Emp">
-    update emp
-    <set>
-      <if test="deptno != null">
-        deptno = #{deptno,jdbcType=INTEGER},
-      </if>
-      <if test="ename != null">
-        ename = #{ename,jdbcType=VARCHAR},
-      </if>
-      <if test="hiredate != null">
-        hiredate = #{hiredate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="job != null">
-        job = #{job,jdbcType=VARCHAR},
-      </if>
-      <if test="mgr != null">
-        mgr = #{mgr,jdbcType=INTEGER},
-      </if>
-    </set>
-    where empno = #{empno,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.lewjun.bean.Emp">
-    update emp
-    set deptno = #{deptno,jdbcType=INTEGER},
-      ename = #{ename,jdbcType=VARCHAR},
-      hiredate = #{hiredate,jdbcType=TIMESTAMP},
-      job = #{job,jdbcType=VARCHAR},
-      mgr = #{mgr,jdbcType=INTEGER}
-    where empno = #{empno,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.lewjun.bean.Emp">
-    <id column="empno" jdbcType="INTEGER" property="empno" />
-    <result column="deptno" jdbcType="INTEGER" property="deptno" />
-    <result column="ename" jdbcType="VARCHAR" property="ename" />
-    <result column="hiredate" jdbcType="TIMESTAMP" property="hiredate" />
-    <result column="job" jdbcType="VARCHAR" property="job" />
-    <result column="mgr" jdbcType="INTEGER" property="mgr" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    empno, deptno, ename, hiredate, job, mgr
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from emp
-    where empno = #{empno,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from emp
-    where empno = #{empno,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.lewjun.bean.Emp">
-    insert into emp (empno, deptno, ename, 
-      hiredate, job, mgr
-      )
-    values (#{empno,jdbcType=INTEGER}, #{deptno,jdbcType=INTEGER}, #{ename,jdbcType=VARCHAR}, 
-      #{hiredate,jdbcType=TIMESTAMP}, #{job,jdbcType=VARCHAR}, #{mgr,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.lewjun.bean.Emp">
-    insert into emp
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="empno != null">
-        empno,
-      </if>
-      <if test="deptno != null">
-        deptno,
-      </if>
-      <if test="ename != null">
-        ename,
-      </if>
-      <if test="hiredate != null">
-        hiredate,
-      </if>
-      <if test="job != null">
-        job,
-      </if>
-      <if test="mgr != null">
-        mgr,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="empno != null">
-        #{empno,jdbcType=INTEGER},
-      </if>
-      <if test="deptno != null">
-        #{deptno,jdbcType=INTEGER},
-      </if>
-      <if test="ename != null">
-        #{ename,jdbcType=VARCHAR},
-      </if>
-      <if test="hiredate != null">
-        #{hiredate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="job != null">
-        #{job,jdbcType=VARCHAR},
-      </if>
-      <if test="mgr != null">
-        #{mgr,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.lewjun.bean.Emp">
-    update emp
-    <set>
-      <if test="deptno != null">
-        deptno = #{deptno,jdbcType=INTEGER},
-      </if>
-      <if test="ename != null">
-        ename = #{ename,jdbcType=VARCHAR},
-      </if>
-      <if test="hiredate != null">
-        hiredate = #{hiredate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="job != null">
-        job = #{job,jdbcType=VARCHAR},
-      </if>
-      <if test="mgr != null">
-        mgr = #{mgr,jdbcType=INTEGER},
-      </if>
-    </set>
-    where empno = #{empno,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.lewjun.bean.Emp">
-    update emp
-    set deptno = #{deptno,jdbcType=INTEGER},
-      ename = #{ename,jdbcType=VARCHAR},
-      hiredate = #{hiredate,jdbcType=TIMESTAMP},
-      job = #{job,jdbcType=VARCHAR},
-      mgr = #{mgr,jdbcType=INTEGER}
-    where empno = #{empno,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.lewjun.bean.Emp">
-    <id column="empno" jdbcType="INTEGER" property="empno" />
-    <result column="deptno" jdbcType="INTEGER" property="deptno" />
-    <result column="ename" jdbcType="VARCHAR" property="ename" />
-    <result column="hiredate" jdbcType="TIMESTAMP" property="hiredate" />
-    <result column="job" jdbcType="VARCHAR" property="job" />
-    <result column="mgr" jdbcType="INTEGER" property="mgr" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    empno, deptno, ename, hiredate, job, mgr
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from emp
-    where empno = #{empno,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from emp
-    where empno = #{empno,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.lewjun.bean.Emp">
-    insert into emp (empno, deptno, ename, 
-      hiredate, job, mgr
-      )
-    values (#{empno,jdbcType=INTEGER}, #{deptno,jdbcType=INTEGER}, #{ename,jdbcType=VARCHAR}, 
-      #{hiredate,jdbcType=TIMESTAMP}, #{job,jdbcType=VARCHAR}, #{mgr,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.lewjun.bean.Emp">
-    insert into emp
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="empno != null">
-        empno,
-      </if>
-      <if test="deptno != null">
-        deptno,
-      </if>
-      <if test="ename != null">
-        ename,
-      </if>
-      <if test="hiredate != null">
-        hiredate,
-      </if>
-      <if test="job != null">
-        job,
-      </if>
-      <if test="mgr != null">
-        mgr,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="empno != null">
-        #{empno,jdbcType=INTEGER},
-      </if>
-      <if test="deptno != null">
-        #{deptno,jdbcType=INTEGER},
-      </if>
-      <if test="ename != null">
-        #{ename,jdbcType=VARCHAR},
-      </if>
-      <if test="hiredate != null">
-        #{hiredate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="job != null">
-        #{job,jdbcType=VARCHAR},
-      </if>
-      <if test="mgr != null">
-        #{mgr,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.lewjun.bean.Emp">
-    update emp
-    <set>
-      <if test="deptno != null">
-        deptno = #{deptno,jdbcType=INTEGER},
-      </if>
-      <if test="ename != null">
-        ename = #{ename,jdbcType=VARCHAR},
-      </if>
-      <if test="hiredate != null">
-        hiredate = #{hiredate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="job != null">
-        job = #{job,jdbcType=VARCHAR},
-      </if>
-      <if test="mgr != null">
-        mgr = #{mgr,jdbcType=INTEGER},
-      </if>
-    </set>
-    where empno = #{empno,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.lewjun.bean.Emp">
-    update emp
-    set deptno = #{deptno,jdbcType=INTEGER},
-      ename = #{ename,jdbcType=VARCHAR},
-      hiredate = #{hiredate,jdbcType=TIMESTAMP},
-      job = #{job,jdbcType=VARCHAR},
-      mgr = #{mgr,jdbcType=INTEGER}
-    where empno = #{empno,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.lewjun.bean.Emp">
-    <id column="empno" jdbcType="INTEGER" property="empno" />
-    <result column="deptno" jdbcType="INTEGER" property="deptno" />
-    <result column="ename" jdbcType="VARCHAR" property="ename" />
-    <result column="hiredate" jdbcType="TIMESTAMP" property="hiredate" />
-    <result column="job" jdbcType="VARCHAR" property="job" />
-    <result column="mgr" jdbcType="INTEGER" property="mgr" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    empno, deptno, ename, hiredate, job, mgr
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from emp
-    where empno = #{empno,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from emp
-    where empno = #{empno,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.lewjun.bean.Emp">
-    insert into emp (empno, deptno, ename, 
-      hiredate, job, mgr
-      )
-    values (#{empno,jdbcType=INTEGER}, #{deptno,jdbcType=INTEGER}, #{ename,jdbcType=VARCHAR}, 
-      #{hiredate,jdbcType=TIMESTAMP}, #{job,jdbcType=VARCHAR}, #{mgr,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.lewjun.bean.Emp">
-    insert into emp
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="empno != null">
-        empno,
-      </if>
-      <if test="deptno != null">
-        deptno,
-      </if>
-      <if test="ename != null">
-        ename,
-      </if>
-      <if test="hiredate != null">
-        hiredate,
-      </if>
-      <if test="job != null">
-        job,
-      </if>
-      <if test="mgr != null">
-        mgr,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="empno != null">
-        #{empno,jdbcType=INTEGER},
-      </if>
-      <if test="deptno != null">
-        #{deptno,jdbcType=INTEGER},
-      </if>
-      <if test="ename != null">
-        #{ename,jdbcType=VARCHAR},
-      </if>
-      <if test="hiredate != null">
-        #{hiredate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="job != null">
-        #{job,jdbcType=VARCHAR},
-      </if>
-      <if test="mgr != null">
-        #{mgr,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.lewjun.bean.Emp">
-    update emp
-    <set>
-      <if test="deptno != null">
-        deptno = #{deptno,jdbcType=INTEGER},
-      </if>
-      <if test="ename != null">
-        ename = #{ename,jdbcType=VARCHAR},
-      </if>
-      <if test="hiredate != null">
-        hiredate = #{hiredate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="job != null">
-        job = #{job,jdbcType=VARCHAR},
-      </if>
-      <if test="mgr != null">
-        mgr = #{mgr,jdbcType=INTEGER},
-      </if>
-    </set>
-    where empno = #{empno,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.lewjun.bean.Emp">
-    update emp
-    set deptno = #{deptno,jdbcType=INTEGER},
-      ename = #{ename,jdbcType=VARCHAR},
-      hiredate = #{hiredate,jdbcType=TIMESTAMP},
-      job = #{job,jdbcType=VARCHAR},
-      mgr = #{mgr,jdbcType=INTEGER}
-    where empno = #{empno,jdbcType=INTEGER}
-  </update>
+    <resultMap id="BaseResultMap" type="com.lewjun.bean.Emp">
+        <id column="empno" jdbcType="INTEGER" property="empno"/>
+        <result column="deptno" jdbcType="INTEGER" property="deptno"/>
+        <result column="ename" jdbcType="VARCHAR" property="ename"/>
+        <result column="hiredate" jdbcType="TIMESTAMP" property="hiredate"/>
+        <result column="job" jdbcType="VARCHAR" property="job"/>
+        <result column="mgr" jdbcType="INTEGER" property="mgr"/>
+    </resultMap>
+    <!--
+    1. 所有在映射文件里的select 语句都将被缓存。
+    2. 所有在映射文件里insert,update 和delete 语句会清空缓存。
+    3. 缓存使用“最近很少使用”算法来回收
+    4. 缓存不会被设定的时间所清空。
+    5. 每个缓存可以存储1024 个列表或对象的引用（不管查询出来的结果是什么）。
+    6. 缓存将作为“读/写”缓存，意味着获取的对象不是共享的且对调用者是安全的。不会有其它的调用
+
+    可用的收回策略(eviction)有：
+    LRU –  最近最少使用的：移除最长时间不被使用的对象（默认）。
+    FIFO –  先进先出：按对象进入缓存的顺序来移除它们。
+    SOFT –  软引用：移除基于垃圾回收器状态和软引用规则的对象。
+    WEAK –  弱引用：更积极地移除基于垃圾收集器状态和弱引用规则的对象。
+
+    flushInterval（刷新间隔）可以被设置为任意的正整数，而且它们代表一个合理的毫秒形式的时间段。默认情况是不设置，也就是没有刷新间隔，缓存仅仅调用语句时刷新。
+    size（引用数目）可以被设置为任意正整数，要记住你缓存的对象数目和你运行环境的可用内存资源数目。默认值1024。
+    readOnly（只读）属性可以被设置为 true 或 false。只读的缓存会给所有调用者返回缓存对象的相同实例。因此这些对象不能被修改。这提供了很重要的性能优势。可读写的缓存会返回缓存对象的拷贝（通过序列化）。这会慢一些，但是安全，因此默认是false。
+    -->
+
+    <cache eviction="LRU"
+           size="1024"
+           readOnly="true"/>
+
+    <sql id="Base_Column_List">
+        empno, deptno, ename, hiredate, job, mgr
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from emp
+        where empno = #{empno,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from emp
+        where empno = #{empno,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.lewjun.bean.Emp">
+        insert into emp (empno, deptno, ename, hiredate, job, mgr)
+        values (#{empno,jdbcType=INTEGER},
+                #{deptno,jdbcType=INTEGER},
+                #{ename,jdbcType=VARCHAR},
+                #{hiredate,jdbcType=TIMESTAMP},
+                #{job,jdbcType=VARCHAR},
+                #{mgr,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.lewjun.bean.Emp">
+        insert into emp
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="empno != null">
+                empno,
+            </if>
+            <if test="deptno != null">
+                deptno,
+            </if>
+            <if test="ename != null">
+                ename,
+            </if>
+            <if test="hiredate != null">
+                hiredate,
+            </if>
+            <if test="job != null">
+                job,
+            </if>
+            <if test="mgr != null">
+                mgr,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="empno != null">
+                #{empno,jdbcType=INTEGER},
+            </if>
+            <if test="deptno != null">
+                #{deptno,jdbcType=INTEGER},
+            </if>
+            <if test="ename != null">
+                #{ename,jdbcType=VARCHAR},
+            </if>
+            <if test="hiredate != null">
+                #{hiredate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="job != null">
+                #{job,jdbcType=VARCHAR},
+            </if>
+            <if test="mgr != null">
+                #{mgr,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.lewjun.bean.Emp">
+        update emp
+        <set>
+            <if test="deptno != null">
+                deptno = #{deptno,jdbcType=INTEGER},
+            </if>
+            <if test="ename != null">
+                ename = #{ename,jdbcType=VARCHAR},
+            </if>
+            <if test="hiredate != null">
+                hiredate = #{hiredate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="job != null">
+                job = #{job,jdbcType=VARCHAR},
+            </if>
+            <if test="mgr != null">
+                mgr = #{mgr,jdbcType=INTEGER},
+            </if>
+        </set>
+        where empno = #{empno,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.lewjun.bean.Emp">
+        update emp
+        set deptno   = #{deptno,jdbcType=INTEGER},
+            ename    = #{ename,jdbcType=VARCHAR},
+            hiredate = #{hiredate,jdbcType=TIMESTAMP},
+            job      = #{job,jdbcType=VARCHAR},
+            mgr      = #{mgr,jdbcType=INTEGER}
+        where empno = #{empno,jdbcType=INTEGER}
+    </update>
 </mapper>
