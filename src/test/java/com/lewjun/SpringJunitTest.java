@@ -4,6 +4,7 @@
  */
 package com.lewjun;
 
+import com.lewjun.mapper.EmpJpaRepo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,15 @@ public class SpringJunitTest {
     @Autowired
     private EmpService empService;
 
+    @Autowired
+    private EmpJpaRepo empJpaRepo;
+
     @Test
     public void testEmpServiceInsert() {
-        empService.insert(new Emp());
+//        empService.insert(new Emp());
+        Emp emp = new Emp();
+        empJpaRepo.save(emp);
+        System.out.println(emp);
+        empJpaRepo.delete(1);
     }
 }
