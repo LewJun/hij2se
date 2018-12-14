@@ -9,4 +9,14 @@ import com.lewjun.bean.Emp;
  */
 public interface EmpService {
     void insert(Emp emp);
+
+    int deleteByPrimaryKey(Integer empno);
+
+    int insertSelective(Emp record);
+
+    Emp selectByPrimaryKey(Integer empno);
+
+    int updateByPrimaryKeySelective(Emp record);
+
+    int updateByPrimaryKey(Emp record);
 }
