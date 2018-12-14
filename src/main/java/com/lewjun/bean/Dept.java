@@ -1,6 +1,13 @@
 package com.lewjun.bean;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Dept {
+	@Id
+	@GeneratedValue()
 	private Integer	deptno;
 
 	private String	dname;

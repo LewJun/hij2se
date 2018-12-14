@@ -1,6 +1,13 @@
 package com.lewjun.bean;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Salgrade {
+	@Id
+	@GeneratedValue()
 	private Integer	grade;
 
 	private Integer	losal;

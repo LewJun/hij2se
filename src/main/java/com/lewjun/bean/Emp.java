@@ -1,8 +1,14 @@
 package com.lewjun.bean;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
 
+@Entity
 public class Emp {
+    @Id
+    @GeneratedValue()
     private Integer empno;
 
     private String ename;
@@ -11,7 +17,7 @@ public class Emp {
 
     private Integer mgr;
 
-    private Date hiredate;
+    private Date hiredate = new Date();
 
     private Integer deptno;
 

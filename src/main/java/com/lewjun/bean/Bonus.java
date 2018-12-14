@@ -1,9 +1,15 @@
 package com.lewjun.bean;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@Entity
 public class Bonus {
+	@Id
+	@GeneratedValue()
 	private Integer		id;
 
 	private Integer		empno;
