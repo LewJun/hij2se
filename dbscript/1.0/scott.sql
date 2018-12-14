@@ -13,19 +13,24 @@ File Encoding         : 65001
 Date: 2016-09-05 00:05:34
 */
 
-SET FOREIGN_KEY_CHECKS=0;
+SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for `bonus`
 -- ----------------------------
 DROP TABLE IF EXISTS `bonus`;
 CREATE TABLE `bonus` (
-  `ID` int(11) NOT NULL auto_increment,
-  `EMPNO` int(11) NOT NULL COMMENT '雇员编号',
-  `SAL` decimal(7,2) NOT NULL COMMENT '雇员工资',
-  `COMM` decimal(7,2) NOT NULL COMMENT '雇员奖金',
+  ` ID ` int (11
+) NOT NULL auto_increment,
+  `EMPNO` int (11
+) NOT NULL COMMENT '雇员编号',
+  `SAL` decimal (7, 2
+) NOT NULL COMMENT '雇员工资',
+  `COMM` decimal (7, 2
+) NOT NULL COMMENT '雇员奖金',
   `PAYTIME` date NOT NULL COMMENT '支付时间',
-  PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+PRIMARY KEY (` ID `
+)
+) ENGINE = MyISAM AUTO_INCREMENT = 2 DEFAULT CHARSET = utf8;
 
 -- ----------------------------
 -- Records of bonus
@@ -37,11 +42,15 @@ INSERT INTO `bonus` VALUES ('1', '7839', '10000.00', '5000.00', '2016-09-12');
 -- ----------------------------
 DROP TABLE IF EXISTS `dept`;
 CREATE TABLE `dept` (
-  `DEPTNO` int(4) NOT NULL COMMENT '部门编号',
-  `DNAME` varchar(14) NOT NULL COMMENT '部门名称',
-  `LOC` varchar(13) NOT NULL COMMENT '部门所在位置',
-  PRIMARY KEY  (`DEPTNO`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `DEPTNO` int (4
+) NOT NULL COMMENT '部门编号',
+  `DNAME` varchar (14
+) NOT NULL COMMENT '部门名称',
+  `LOC` varchar (13
+) NOT NULL COMMENT '部门所在位置',
+PRIMARY KEY (`DEPTNO`
+)
+) ENGINE = MyISAM DEFAULT CHARSET = utf8;
 
 -- ----------------------------
 -- Records of dept
@@ -56,14 +65,20 @@ INSERT INTO `dept` VALUES ('40', 'OPERATIONS', 'BOSTON');
 -- ----------------------------
 DROP TABLE IF EXISTS `emp`;
 CREATE TABLE `emp` (
-  `EMPNO` int(4) NOT NULL auto_increment COMMENT '雇员编号',
-  `ENAME` varchar(10) default NULL COMMENT '雇员姓名',
-  `JOB` varchar(9) default NULL COMMENT '雇员职位',
-  `MGR` int(4) default NULL COMMENT '领导编号',
+  `EMPNO` int (4
+) NOT NULL auto_increment COMMENT '雇员编号',
+  `ENAME` varchar (10
+) default NULL COMMENT '雇员姓名',
+  ` JOB ` varchar (9
+) default NULL COMMENT '雇员职位',
+  `MGR` int (4
+) default NULL COMMENT '领导编号',
   `HIREDATE` date default NULL COMMENT '雇佣日期',
-  `DEPTNO` int(4) default NULL COMMENT '所在部门编号',
-  PRIMARY KEY  (`EMPNO`)
-) ENGINE=MyISAM AUTO_INCREMENT=7935 DEFAULT CHARSET=utf8;
+  `DEPTNO` int (4
+) default NULL COMMENT '所在部门编号',
+PRIMARY KEY (`EMPNO`
+)
+) ENGINE = MyISAM AUTO_INCREMENT = 7935 DEFAULT CHARSET = utf8;
 
 -- ----------------------------
 -- Records of emp
@@ -86,11 +101,15 @@ INSERT INTO `emp` VALUES ('7934', 'MILLER', 'CLERK', '7782', '1982-01-23', '10')
 -- ----------------------------
 DROP TABLE IF EXISTS `salgrade`;
 CREATE TABLE `salgrade` (
-  `GRADE` int(11) NOT NULL COMMENT '工资等级',
-  `LOSAL` int(11) NOT NULL COMMENT '最低工资',
-  `HISAL` int(11) NOT NULL COMMENT '最高工资',
-  PRIMARY KEY  (`GRADE`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `GRADE` int (11
+) NOT NULL COMMENT '工资等级',
+  `LOSAL` int (11
+) NOT NULL COMMENT '最低工资',
+  `HISAL` int (11
+) NOT NULL COMMENT '最高工资',
+PRIMARY KEY (`GRADE`
+)
+) ENGINE = MyISAM DEFAULT CHARSET = utf8;
 
 -- ----------------------------
 -- Records of salgrade

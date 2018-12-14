@@ -1,16 +1,14 @@
 package com.lewjun.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.lewjun.bean.Emp;
 import com.lewjun.mapper.EmpMapper;
 import com.lewjun.service.EmpService;
 import com.lewjun.utils.Developer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 
  * @author LewJun
  * @version $Id: EmpServiceImpl.java, v 0.1 2017年4月13日 上午10:51:11 LewJun Exp $
  */
@@ -19,11 +17,11 @@ import com.lewjun.utils.Developer;
 public class EmpServiceImpl implements EmpService {
     @Autowired
     EmpMapper empMapper;
-    
+
     @Autowired
     Developer developer;
 
-    /** 
+    /**
      * @see com.lewjun.service.EmpService#insert(com.lewjun.bean.Emp)
      */
     @Override

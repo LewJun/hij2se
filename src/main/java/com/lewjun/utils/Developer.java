@@ -1,12 +1,11 @@
 package com.lewjun.utils;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 /**
- * 
  * @author LewJun
  * @version $Id: Developer.java, v 0.1 2017年4月13日 下午1:36:48 LewJun Exp $
  */
@@ -14,13 +13,13 @@ import org.springframework.stereotype.Component;
 public class Developer {
 
     @Value("${developer.name}")
-    private String  name;
+    private String name;
 
     @Value("${developer.age}")
     private Integer age;
 
     @Value("${developer.birthday}")
-    private Date    birthday;
+    private Date birthday;
 
     public String getName() {
         return name;
