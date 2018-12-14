@@ -1,7 +1,3 @@
-/**
- * Sunnysoft.com Inc.
- * Copyright (c) 2004-2017 All Rights Reserved.
- */
 package com.lewjun.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
