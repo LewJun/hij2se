@@ -1,48 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context-3.2.xsd
-	http://www.springframework.org/schema/aop
-	http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
-	
-	<!-- 自动扫描(自动注入)，扫描com.lewjun.aspect, com.lejun.mapper, com.lewjun.utils这个包以及它的子包的所有使用@Service, @Repository注解标注的类 -->
-    <context:component-scan base-package="com.lewjun.aspect, com.lejun.mapper, com.lewjun.utils" />
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-	<bean id="customEditorConfigurer"
-		class="org.springframework.beans.factory.config.CustomEditorConfigurer">
-		<property name="customEditors">
-			<map>
-				<entry key="java.util.Date">
-					<bean class="org.springframework.beans.propertyeditors.CustomDateEditor">
-						<constructor-arg index="0">
-							<bean class="java.text.SimpleDateFormat">
-								<constructor-arg>
-									<value>yyyy-MM-dd</value>
-								</constructor-arg>
-							</bean>
-						</constructor-arg>
-						<constructor-arg index="1">
-							<value>false</value>
-						</constructor-arg>
-					</bean>
-				</entry>
-			</map>
-		</property>
-	</bean>
-	<bean id="emp" class="com.lewjun.bean.Emp">
-		<property name="empno" value="7839"></property>
-		<property name="ename" value="KING"></property>
-		<property name="job" value="PRESIDENT"></property>
-		<property name="mgr" value=""></property>
-		<property name="deptno" value="10"></property>
-		<property name="hiredate" value="1981-11-17"></property>
-	</bean>
-	
-	<import resource="./spring-dao.xml"/>
-	<import resource="./spring-service.xml"/>
+    <!-- 自动扫描(自动注入)，扫描com.lewjun.aspect, com.lejun.mapper, com.lewjun.utils这个包以及它的子包的所有使用@Service, @Repository注解标注的类 -->
+    <context:component-scan base-package="com.lewjun.aspect, com.lewjun.mapper, com.lewjun.utils"/>
+
+    <bean id="customEditorConfigurer"
+          class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="customEditors">
+            <map>
+                <entry key="java.util.Date">
+                    <bean class="org.springframework.beans.propertyeditors.CustomDateEditor">
+                        <constructor-arg index="0">
+                            <bean class="java.text.SimpleDateFormat">
+                                <constructor-arg value="yyyy-MM-dd"/>
+                            </bean>
+                        </constructor-arg>
+                        <constructor-arg index="1" value="false"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="emp" class="com.lewjun.bean.Emp">
+        <property name="empno" value="7839"/>
+        <property name="ename" value="KING"/>
+        <property name="job" value="PRESIDENT"/>
+        <property name="mgr" value=""/>
+        <property name="deptno" value="10"/>
+        <property name="hiredate" value="1981-11-17"/>
+    </bean>
+
+    <import resource="./spring-dao.xml"/>
+    <import resource="./spring-service.xml"/>
 </beans>
