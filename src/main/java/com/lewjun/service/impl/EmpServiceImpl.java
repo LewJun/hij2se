@@ -28,7 +28,7 @@ public class EmpServiceImpl implements EmpService {
     Developer developer;
 
     /** 
-     * @see com.lewjun.service.EmpService#save(com.lewjun.bean.Emp)
+     * @see com.lewjun.service.EmpService#insert(com.lewjun.bean.Emp)
      */
     @Override
     public void insert(Emp emp) {

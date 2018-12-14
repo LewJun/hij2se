@@ -4,16 +4,14 @@
  */
 package com.lewjun.mapper;
 
+import com.lewjun.bean.Emp;
 import org.springframework.stereotype.Repository;
 
-import com.lewjun.bean.Emp;
-
 /**
- * 
  * @author LewJun
  * @version $Id: EmpMapper.java, v 0.1 2017年4月13日 上午11:30:11 LewJun Exp $
  */
 @Repository
 public interface EmpMapper {
-    public void insert(Emp emp);
+    void insert(Emp emp);
 }

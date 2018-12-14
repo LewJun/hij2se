@@ -22,7 +22,7 @@
 		where EMPNO = #{empno,jdbcType=INTEGER}
 	</select>
 
-	<insert id="insert" parameterType="com.lewjun.bean.Emp">
+	<insert id="insert" parameterType="com.lewjun.bean.Emp" useGeneratedKeys="true" keyProperty="empno">
 		insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, DEPTNO)
 		values (#{empno,jdbcType=INTEGER}, #{ename,jdbcType=VARCHAR},
 		#{job,jdbcType=VARCHAR}, #{mgr,jdbcType=INTEGER}, #{hiredate,jdbcType=DATE}, #{deptno,jdbcType=INTEGER})
