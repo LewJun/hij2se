@@ -29,6 +29,22 @@ public class SpringJunitTest {
     }
 
     @Test
+    public void testCache() throws InterruptedException {
+        Integer empno = 5;
+        empService.selectByPrimaryKey(empno);
+        empService.selectByPrimaryKey(empno);
+        empService.selectByPrimaryKey(empno);
+        empService.insert(new Emp());
+        empService.selectByPrimaryKey(empno);
+        empService.selectByPrimaryKey(empno);
+        empService.selectByPrimaryKey(empno);
+        // 测试过了1分钟是否会刷新缓存
+        Thread.sleep((long) (62 * 1000));
+        empService.selectByPrimaryKey(empno);
+        empService.selectByPrimaryKey(empno);
+    }
+
+    @Test
     public void testEmpJpaRepo() {
         Emp emp = new Emp();
         empJpaRepo.save(emp);
