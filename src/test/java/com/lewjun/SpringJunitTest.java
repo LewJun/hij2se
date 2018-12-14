@@ -38,7 +38,7 @@ public class SpringJunitTest {
         empService.selectByPrimaryKey(empno);
         empService.selectByPrimaryKey(empno);
         empService.selectByPrimaryKey(empno);
-        // 测试过了1分钟是否会刷新缓存
+        // 测试过了1分钟是否会刷新缓存，前提是flushInterval=60*1000
         Thread.sleep((long) (62 * 1000));
         empService.selectByPrimaryKey(empno);
         empService.selectByPrimaryKey(empno);
